@@ -1,0 +1,32 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+%}
+
+%token A B
+
+%%
+S : TEN_A MORE_A B        /* a^n b, n >= 10 */
+  ;
+
+TEN_A : A A A A A A A A A A
+      ;
+
+MORE_A : A MORE_A
+       | /* empty */
+       ;
+%%
+
+int main()
+{
+    printf("Enter string:\n");
+    yyparse();
+    printf("Input string is VALID (a^n b, n >= 10)\n");
+    return 0;
+}
+
+int yyerror(char *s)
+{
+    printf("Input string is INVALID\n");
+    exit(0);
+}
