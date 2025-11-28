@@ -1,0 +1,40 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+
+int valid = 1;
+%}
+
+/* Definitions */
+DIGIT       [0-9]
+NUMBER      {DIGIT}+
+ID          [a-zA-Z_][a-zA-Z0-9_]*
+OP          [+\-*/]
+LP          "("
+RP          ")"
+
+%%
+{NUMBER}    { }          /* Operand */
+{ID}        { }          /* Operand */
+{OP}        { }          /* Operator */
+{LP}        { }
+{RP}        { }
+[ \t]+      { }          /* Ignore spaces */
+
+\n          {             /* End of input */
+                if (valid)
+                    printf("Valid Arithmetic Expression\n");
+                else
+                    printf("Invalid Arithmetic Expression\n");
+                exit(0);
+            }
+
+.           { valid = 0; }   /* Any invalid character */
+%%
+
+int main()
+{
+    printf("Enter an arithmetic expression:\n");
+    yylex();
+    return 0;
+}
