@@ -1,0 +1,32 @@
+%{
+#include <stdio.h>
+#include <string.h>
+
+int maxlen = 0;
+char longest[1000];
+%}
+
+%%
+[a-zA-Z]+ {
+    int len = yyleng;
+    if (len > maxlen)
+    {
+        maxlen = len;
+        strcpy(longest, yytext);
+    }
+}
+.|\n    { /* ignore other characters */ }
+%%
+
+int main(int argc, char *argv[])
+{
+    if (argc > 1)
+        yyin = fopen(argv[1], "r");
+
+    yylex();
+
+    printf("Longest word: %s\n", longest);
+    printf("Length: %d\n", maxlen);
+
+    return 0;
+}
