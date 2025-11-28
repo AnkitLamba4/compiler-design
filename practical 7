@@ -1,0 +1,28 @@
+%{
+#include <stdio.h>
+#include <string.h>
+
+char str[100];
+int len;
+%}
+
+%%
+[a-zA-Z]+   {
+                strcpy(str, yytext);
+                len = yyleng;
+
+                for (int i = len; i >= 1; i--) {
+                    for (int j = 0; j < i; j++)
+                        printf("%c", str[j]);
+                    printf("\n");
+                }
+            }
+\n          { /* ignore newline */ }
+%%
+
+int main()
+{
+    printf("Enter the string:\n");
+    yylex();
+    return 0;
+}
