@@ -1,0 +1,24 @@
+%{
+#include <stdio.h>
+
+int lines = 0;
+int characters = 0;
+%}
+
+%%
+\n          { lines++; characters++; }
+.           { characters++; }
+%%
+
+int main(int argc, char *argv[])
+{
+    if (argc > 1)
+        yyin = fopen(argv[1], "r");
+
+    yylex();
+
+    printf("Number of lines = %d\n", lines);
+    printf("Number of characters = %d\n", characters);
+
+    return 0;
+}
