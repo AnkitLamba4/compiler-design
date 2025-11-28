@@ -1,0 +1,29 @@
+%{
+#include <stdio.h>
+#include <stdlib.h>
+%}
+
+%token A B
+
+%%
+S : A BSEQ
+  ;
+
+BSEQ : B BSEQ
+     | /* empty */
+     ;
+%%
+
+int main()
+{
+    printf("Enter string:\n");
+    yyparse();
+    printf("Valid string of the language a b^n\n");
+    return 0;
+}
+
+int yyerror(char *s)
+{
+    printf("Invalid string\n");
+    exit(0);
+}
